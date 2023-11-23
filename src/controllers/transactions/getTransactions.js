@@ -49,27 +49,32 @@ const detailTransactions = async (req, res) => {
 };
 
 const extractTransactions = async (req, res) => {
-	const userLogado = req.user;
+	const userLogged = req.user;
 
 	try {
-		const queryEntradas =
-			"SELECT SUM(valor) as entrada FROM transacoes WHERE user_id = $1 and tipo = $2 group by $3";
-		const params = [userLogado.id, "entrada", userLogado.id];
-		const entradas = await knex.query(queryEntradas, params);
+		// const queryEntradas =
+		// 	"SELECT SUM(valor) as entrada FROM transacoes WHERE user_id = $1 and tipo = $2 group by $3";
+		// const params = [userLogged.id, "entrada", userLogged.id];
+		// const entradas = await knex.query(queryEntradas, params);
 
-		const querySaidas =
-			"SELECT SUM(valor) as saida FROM transacoes WHERE user_id = $1 and tipo = $2 group by $3";
-		const params2 = [userLogado.id, "saida", userLogado.id];
-		const saidas = await knex.query(querySaidas, params2);
+		const queryIns = await knex("transactions")
+			.sum("ammount")
+			.where({ user_id: userLogged.id, type: "entrada" })
+			.groupBy("user_id");
 
-		const entradasTotal = entradas.rowCount > 0 ? entradas.rows[0].entrada : 0;
-		const saidasTotal = saidas.rowCount > 0 ? saidas.rows[0].saida : 0;
-		const resultado = {
-			entradas: entradasTotal,
-			saidas: saidasTotal,
+		const queryOuts = await knex("transactions")
+			.sum("ammount")
+			.where({ user_id: userLogged.id, type: "saida" })
+			.groupBy("user_id");
+
+		const totalIncome = queryIns.rowCount > 0 ? queryIns.rows[0].entrada : 0;
+		const totalOutcome = queryOuts.rowCount > 0 ? queryOuts.rows[0].saida : 0;
+		const result = {
+			entradas: totalIncome,
+			saidas: totalOutcome,
 		};
 
-		return res.status(200).json(resultado);
+		return res.status(200).json(result);
 	} catch (error) {
 		console.error("O seguinte erro ocorreu:", error);
 		return res.status(400).json({ mensagem: "Server error" });

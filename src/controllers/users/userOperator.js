@@ -6,45 +6,24 @@ const jwt = require("jsonwebtoken");
 //cadastrar usuario
 const newUser = async (req, res) => {
 	//desestruturar infos do body
-	const { nome, email, senha } = req.body;
-
-	//verificar se todos os dados foram informados
-	if (!nome || !email || !senha) {
-		return res
-			.status(400)
-			.json({ mensagem: "Todos os dados precisam ser informados" });
-	}
-	//verificar se já existe o email cadastrado
-	const verificarEmail = await knex.query(
-		"SELECT * FROM usuarios WHERE email = $1",
-		[email]
-	);
-
-	if (verificarEmail.rows.length > 0) {
-		return res.status(400).json({
-			mensagem: "Já existe usuário cadastrado com o e-mail informado.",
-		});
-	}
+	const { name, email, password } = req.body;
 
 	try {
 		//fazer hash senha
-		const senhaCriptografada = await bcrypt.hash(senha, 10);
+		const encryptedPassword = await bcrypt.hash(password, 10);
 		//enviar query insert
-		const query = await knex.query(
-			"INSERT INTO usuarios (nome, email, senha) VALUES ($1, $2, $3)",
-			[nome, email, senhaCriptografada]
-		);
+		const query = await knex("user").insert({ name, email, encryptedPassword });
 		//retorno query
-		const queryResposta = await knex.query(
-			"SELECT * FROM usuarios WHERE email = $1",
-			[email]
-		);
-		const usuarioResposta = {
-			id: queryResposta.rows[0].id,
-			nome: queryResposta.rows[0].nome,
-			email: queryResposta.rows[0].email,
+		const queryReturn = await knex
+			.select("*")
+			.from("users")
+			.where("email", email);
+		const userReturn = {
+			id: queryReturn.rows[0].id,
+			name: queryReturn.rows[0].name,
+			email: queryReturn.rows[0].email,
 		};
-		return res.status(201).json(usuarioResposta);
+		return res.status(201).json(userReturn);
 	} catch (error) {
 		return res.status(404).json({ mensagem: "Erro do servidor" });
 	}
