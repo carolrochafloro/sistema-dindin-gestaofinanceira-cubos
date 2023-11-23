@@ -14,9 +14,8 @@ const {
 	deleteTransaction,
 } = require("../controllers/transactions/postPutTransactions");
 
-const checkUser = require("../middleware/transactiosnMidd");
+const { checkUser } = require("../middleware/transactiosnMidd");
 
-// valida usuario logado
 transactionRoutes.use(checkUser);
 // extrato das transacoes
 transactionRoutes.get("/transacao/extrato", extractTransactions);

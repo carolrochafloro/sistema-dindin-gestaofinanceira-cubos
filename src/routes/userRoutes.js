@@ -1,5 +1,9 @@
 const express = require("express");
 const userRoutes = express();
+const {
+	checkInfoNewUser,
+	checkUser,
+} = require("../middleware/transactiosnMidd");
 
 const {
 	newUser,
@@ -8,19 +12,17 @@ const {
 	updateUser,
 } = require("../controllers/users/userOperator");
 
-const checkUser = require("../middleware/transactiosnMidd");
-
-//cadastrar
-rotas.post("/usuario", newUser);
+//cadastrar + middleware validação
+userRoutes.post("/usuario", checkInfoNewUser, newUser);
 //fazer login
-rotas.post("/login", loginUser);
+userRoutes.post("/login", loginUser);
 
-// valida usuario logado
-rotas.use(verUsuarioLogado);
+// valida usuario logado em todas as rotas abaixo
+userRoutes.use(checkUser);
 
 //detalhar usuario
-rotas.get("/usuario", detailUser);
+userRoutes.get("/usuario", detailUser);
 //atualizar usuario
-rotas.put("/usuario", updateUser);
+userRoutes.put("/usuario", updateUser);
 
 module.exports = userRoutes;
