@@ -1,7 +1,7 @@
 - [Portugês](#portugues)
 - [English](#ingles)
 
-# Sistema DinDin - gestão financeira{#portugues}
+# Sistema DinDin - gestão financeira {#portugues}
 
 Desafio do módulo 3 do curso de Desenvolvimento de Software com foco em back-end da Cubos Academy refatorado após o fim do curso.
 
@@ -77,7 +77,7 @@ _Em construção_
 - Verificações de segurança da senha com mínimo de caracteres de diferentes tipos;
 - Validação do formato do e-mail.
 
-# DinDin System - Financial Management{#ingles} 
+# DinDin System - Financial Management {#ingles} 
 Refactoring of the Module 3 challenge from the Back-End Software Development course at Cubos Academy after the end of the course.  
 
 ## About the System
