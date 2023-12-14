@@ -1,28 +1,30 @@
 const express = require("express");
 const userRoutes = express();
-const {
-	checkInfoNewUser,
-	checkUser,
-} = require("../middleware/transactiosnMidd");
 
 const {
 	newUser,
-	loginUser,
-	detailUser,
+	login,
 	updateUser,
-} = require("../controllers/users/userOperator");
+	detailUser,
+	deleteUser,
+} = require("../controllers/users/index");
 
-//cadastrar + middleware validação
-userRoutes.post("/usuario", checkInfoNewUser, newUser);
-//fazer login
-userRoutes.post("/login", loginUser);
+const {
+	checkAuth,
+	checkEmailExists,
+	checkInfoNewUser,
+} = require("../middleware/index");
 
-// valida usuario logado em todas as rotas abaixo
-userRoutes.use(checkUser);
+userRoutes.post("/usuario", checkInfoNewUser, checkEmailExists, newUser);
 
-//detalhar usuario
+userRoutes.post("/login", login);
+
+userRoutes.use(checkAuth);
+
 userRoutes.get("/usuario", detailUser);
-//atualizar usuario
+
 userRoutes.put("/usuario", updateUser);
+
+userRoutes.delete("/usuario", deleteUser);
 
 module.exports = userRoutes;
