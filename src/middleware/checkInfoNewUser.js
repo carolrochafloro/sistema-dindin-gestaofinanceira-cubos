@@ -7,9 +7,8 @@ const checkInfoNewUser = async (req, res, next) => {
 		return res.status(400).json({
 			message: "Oops! Você esqueceu de preencher todos os campos!",
 		});
-
-		next();
 	}
+	next();
 };
 
 module.exports = checkInfoNewUser;

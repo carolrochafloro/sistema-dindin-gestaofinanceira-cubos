@@ -9,9 +9,9 @@ const newUser = async (req, res) => {
 		//fazer hash senha
 		const encryptedPassword = await bcrypt.hash(password, 10);
 		//enviar query insert
-		const newUserQuery = await knex("user")
+		const newUserQuery = await knex("users")
 			.returning(["id", "name", "email"])
-			.insert({ name, email, encryptedPassword });
+			.insert({ name, email, password: encryptedPassword });
 
 		return res.status(201).json(newUserQuery);
 	} catch (error) {

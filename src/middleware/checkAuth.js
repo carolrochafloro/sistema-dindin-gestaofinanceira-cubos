@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const knex = require("../config/db/dbConnection");
+const knex = require("../config/dbConnection");
 
 const checkAuth = async (req, res, next) => {
 	const { authorization } = req.headers;
@@ -9,26 +9,28 @@ const checkAuth = async (req, res, next) => {
 			.status(401)
 			.json({ message: "Oops! Você não tem autorização. Faça o login!" });
 	}
-
 	const token = authorization.split(" ")[1];
 
 	try {
 		const { id } = jwt.verify(token, process.env.JWT_PASSWORD);
-		const { rows, rowCount } = await knex
-			.select("*")
-			.from("users")
-			.where("id", id);
 
-		if (rowCount < 1) {
+		const user = await knex("users").where("id", id);
+
+		if (user.length < 1) {
 			return res
 				.status(401)
 				.json({ message: "Oops! Você não tem autorização. Faça o login!" });
 		}
-		req.user = rows[0];
+
+		req.user = user[0];
 
 		next();
 	} catch (error) {
-		return res.status(500).json({ message: "Erro do servidor" });
+		if (error instanceof jwt.JsonWebTokenError) {
+			return res.status(401).json({ message: "Token inválido" });
+		}
+		console.error(error);
+		return res.status(500).json({ message: "Erro do servidor midd" });
 	}
 };
 

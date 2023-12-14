@@ -4,29 +4,31 @@ const bcrypt = require("bcrypt");
 const updateUser = async (req, res) => {
 	const idUsuario = req.user.id;
 
-	const { nome, email, senha } = req.body;
+	const { name, email, password } = req.body;
 	try {
-		if (!nome || !email || !senha) {
+		if (!name || !email || !password) {
 			return res
 				.status(400)
 				.json({ mensagem: "Todos os campos devem ser preenchidos" });
 		}
 
-		const checkEmail = await knex("usuarios").where("email", email);
-		if (checkEmail.rows.length > 0) {
+		const [checkEmail] = await knex("users").where("email", email);
+		console.log(checkEmail);
+
+		if (checkEmail.rows > 0 && checkEmail.id != idUsuario) {
 			return res.status(400).json({
 				mensagem: "Já existe usuário cadastrado com o e-mail informado.",
 			});
 		}
 
-		const senhaCriptografada = await bcrypt.hash(senha, 10);
+		const senhaCriptografada = await bcrypt.hash(password, 10);
 
-		const query = await knex("usuarios")
+		const query = await knex("users")
 			.returning(["id", "name", "email"])
 			.where("id", idUsuario)
-			.update({ nome, email, senha: senhaCriptografada });
+			.update({ name, email, password: senhaCriptografada });
 
-		return res.status(201).json({ query });
+		return res.status(201).json(query);
 	} catch (error) {
 		console.error(error);
 		return res.status(500).json({ mensagem: "Erro do servidor" });

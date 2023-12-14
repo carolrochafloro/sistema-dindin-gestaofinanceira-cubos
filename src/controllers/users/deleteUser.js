@@ -4,7 +4,7 @@ const deleteUser = async (req, res) => {
 	const idUsuario = req.user.id;
 
 	try {
-		await knex("usuarios").where("id", idUsuario).del();
+		await knex("users").where("id", idUsuario).del();
 
 		return res.status(200).json({ mensagem: "Conta deletada" });
 	} catch (error) {
