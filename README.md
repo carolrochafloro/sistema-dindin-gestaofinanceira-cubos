@@ -1,5 +1,5 @@
-- [Portugês](#portugues)
-- [English](#ingles)
+- Português
+- English
 
 # Sistema DinDin - gestão financeira {#portugues}
 
