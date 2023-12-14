@@ -4,30 +4,6 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 //cadastrar usuario
-const newUser = async (req, res) => {
-	//desestruturar infos do body
-	const { name, email, password } = req.body;
-
-	try {
-		//fazer hash senha
-		const encryptedPassword = await bcrypt.hash(password, 10);
-		//enviar query insert
-		const query = await knex("user").insert({ name, email, encryptedPassword });
-		//retorno query
-		const queryReturn = await knex
-			.select("*")
-			.from("users")
-			.where("email", email);
-		const userReturn = {
-			id: queryReturn.rows[0].id,
-			name: queryReturn.rows[0].name,
-			email: queryReturn.rows[0].email,
-		};
-		return res.status(201).json(userReturn);
-	} catch (error) {
-		return res.status(404).json({ mensagem: "Erro do servidor" });
-	}
-};
 
 //login
 const loginUser = async (req, res) => {
@@ -49,7 +25,7 @@ const loginUser = async (req, res) => {
 		}
 		//token login
 		const token = jwt.sign({ id: usuario.rows[0].id }, senhaJwt, {
-			expiresIn: "8h",
+			expiresIn: process.env.JWT_EXPIRE,
 		});
 		//desestruturação p/ exibir informações sem senha
 		const { senha: _, ...UsuarioLogado } = usuario.rows[0];
