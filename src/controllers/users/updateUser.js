@@ -13,7 +13,6 @@ const updateUser = async (req, res) => {
 		}
 
 		const [checkEmail] = await knex("users").where("email", email);
-		console.log(checkEmail);
 
 		if (checkEmail.rows > 0 && checkEmail.id != idUsuario) {
 			return res.status(400).json({
