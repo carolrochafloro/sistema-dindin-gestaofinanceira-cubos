@@ -1,4 +1,4 @@
-drop database dindin if exists;
+drop database dindin;
 
 create database dindin;
 
@@ -11,22 +11,32 @@ create table users (
 
 create table categories (
 	id serial primary key,
-  descrip text
+  category text,
+	id_user integer references users(id) null
 );
+
+create table type_transaction (
+	id serial primary key,
+	type_transaction varchar(10) not null
+)
 
 create table transactions (
 	id serial primary key,
 	descrip text,
   ammount integer not null,
 	date_transaction date not null,
-	category_id integer references categorias(id),
+	category_id integer references categories(id),
 	user_id	integer references users(id),
-	type text not null
+	type_transaction integer references type_transaction(id)
 );
+
+insert into type_transaction  
+(type_transaction) values
+('entrada'), ('saida')
 
 
 insert into categories 
-(descrip)
+(category)
 values
 ('Alimentação'),('Assinaturas e Serviços'),
 ('Casa'),('Mercado'),('Cuidados Pessoais'),
