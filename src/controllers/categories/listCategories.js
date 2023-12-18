@@ -2,7 +2,7 @@ const knex = require("../../config/dbConnection");
 
 const listCategories = async (req, res) => {
 	const userId = req.user.id;
-	console.log(userId);
+
 	try {
 		const categories = await knex
 			.select("*")

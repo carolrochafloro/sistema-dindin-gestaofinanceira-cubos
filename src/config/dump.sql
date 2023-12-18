@@ -11,7 +11,7 @@ create table users (
 
 create table categories (
 	id serial primary key,
-  descrip text,
+  category text,
 	id_user integer references users(id) null
 );
 
@@ -27,7 +27,7 @@ create table transactions (
 	date_transaction date not null,
 	category_id integer references categories(id),
 	user_id	integer references users(id),
-	type_transaction integer references type(id)
+	type_transaction integer references type_transaction(id)
 );
 
 insert into type_transaction  
@@ -36,7 +36,7 @@ insert into type_transaction
 
 
 insert into categories 
-(descrip)
+(category)
 values
 ('Alimentação'),('Assinaturas e Serviços'),
 ('Casa'),('Mercado'),('Cuidados Pessoais'),
