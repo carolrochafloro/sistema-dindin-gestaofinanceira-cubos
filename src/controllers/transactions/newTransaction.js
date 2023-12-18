@@ -35,11 +35,19 @@ const newTransaction = async (req, res) => {
 			});
 		}
 
+		// const returnObj = await knex
+		// 	.select("*")
+		// 	.from("transactions")
+		// 	.where("id", idTransaction.id)
+		// 	.join("categories", function () {
+		// 		this.on("id", "=", "category_id");
+		// 	});
+
 		const returnObj = await knex
-			.select("*")
+			.select("transactions.*", "categories.category")
 			.from("transactions")
 			.where("transactions.id", idTransaction.id)
-			.leftJoin("categories", "transactions.category_id", "categories.id");
+			.join("categories", "transactions.category_id", "=", "categories.id");
 
 		return res.status(201).json(returnObj);
 	} catch (error) {

@@ -4,6 +4,7 @@ const transactionRoutes = express();
 const {
 	newTransaction,
 	listTransactions,
+	updateTransaction,
 } = require("../controllers/transactions/index");
 
 const { checkAuth } = require("../middleware/index");
@@ -14,10 +15,8 @@ transactionRoutes.use(checkAuth);
 transactionRoutes.get("/transacao", listTransactions);
 // //detalhar transacao
 // transactionRoutes.get("/transacao/:id", detailTransactions);
-//cadastrar transacao
 transactionRoutes.post("/transacao", newTransaction);
-//atualizar transacao usuario logado
-// transactionRoutes.put("/transacao/:id", updateTransaction);
+transactionRoutes.put("/transacao/:id", updateTransaction);
 // //excluir transacao usuario logado
 // transactionRoutes.delete("/transacao/:id", deleteTransaction);
 
