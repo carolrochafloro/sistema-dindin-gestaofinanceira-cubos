@@ -1,48 +1,56 @@
-const knex = require("knex");
+const knex = require("../../config/dbConnection");
 
 const newTransaction = async (req, res) => {
 	const idUser = req.user.id;
-	const { descricao, valor, data, categoria_id, tipo } = req.body;
+	const { descrip, ammount, date_transaction, category_id, type_transaction } =
+		req.body;
 
-	if (!iduser) {
-		return res.status(404).json({ mensagem: "user não encontrado." });
-	}
-
-	if (!descricao || !valor || !data || !categoria_id || !tipo) {
+	if (
+		!descrip ||
+		!ammount ||
+		!date_transaction ||
+		!category_id ||
+		!type_transaction
+	) {
 		return res
 			.status(404)
 			.json({ mensagem: "Todos os campos obrigatórios devem ser informados." });
 	}
 
-	if (tipo != "entrada" && tipo != "saida") {
-		return res
-			.status(404)
-			.json({ mensagem: "O tipo de transação está incorreto." });
-	}
-
 	try {
-		// const query = `insert into transacoes (descricao, valor, data, user_id, categoria_id, tipo)
-		// //             values ($1, $2, $3, $4, $5, $6)`;
-		// const params = [descricao, valor, data, iduser, categoria_id, tipo];
+		const transaction = await knex("transactions").returning("id").insert({
+			descrip,
+			ammount,
+			date_transaction,
+			category_id,
+			user_id: idUser,
+			type_transaction,
+		});
 
-		const transaction = knex("transacoes")
-			.returning()
-			.insert(descricao, valor, data, categoria_id, tipo);
+		const idTransaction = transaction[0];
 
-		// const select = `select transacoes.id, transacoes.tipo, transacoes.descricao,
-		//              transacoes.valor, transacoes.data, transacoes.user_id, transacoes.categoria_id,
-		//              categorias.descricao AS categoria_nome
-		//              FROM transacoes
-		//              left join categorias ON transacoes.categoria_id = categorias.id
-		//              where transacoes.user_id = $1
-		//            order by transacoes.id desc`;
+		if (transaction.length < 1) {
+			return res.status(400).json({
+				mensagem: "Houve um erro ao inserir a transação no banco de dados.",
+			});
+		}
+		// const returnObj = await knex
+		// 	.select("*")
+		// 	.from("transactions")
+		// 	.where("id", idTransaction)
+		// 	.leftJoin("categories")
+		// 	.where("id", category_id);
+		const returnObj = await knex
+			.select("*")
+			.from("transactions")
+			.where("transactions.id", idTransaction.id)
+			.leftJoin("categories", "transactions.category_id", "categories.id");
 
-		const reqParams = [iduser];
-
-		const resRows = await knex.query(select, reqParams);
-
-		return res.status(201).json(resRows.rows[0]);
+		return res.status(201).json(returnObj);
 	} catch (error) {
+		console.error(error);
 		return res.status(500).json({ mensagem: "Erro do servidor" });
 	}
 };
+
+module.exports = newTransaction;

@@ -1,23 +1,12 @@
-// const express = require("express");
-// const transactionRoutes = express();
+const express = require("express");
+const transactionRoutes = express();
 
-// const {
-// 	listTransactions,
-// 	detailTransactions,
-// 	extractTransactions,
-// 	listCategories,
-// } = require("../controllers/transactions/getTransactions");
+const { newTransaction } = require("../controllers/transactions/index");
 
-// const {
-// 	newTransaction,
-// 	updateTransaction,
-// 	deleteTransaction,
-// } = require("../controllers/transactions/postPutTransactions");
+const { checkAuth } = require("../middleware/index");
 
-// const { checkUser } = require("../middleware/transactiosnMidd");
-
-// transactionRoutes.use(checkUser);
-// // extrato das transacoes
+transactionRoutes.use(checkAuth);
+// extrato das transacoes
 // transactionRoutes.get("/transacao/extrato", extractTransactions);
 // //listar categorias
 // transactionRoutes.get("/categoria", listCategories);
@@ -25,11 +14,11 @@
 // transactionRoutes.get("/transacao", listTransactions);
 // //detalhar transacao
 // transactionRoutes.get("/transacao/:id", detailTransactions);
-// //cadastrar transacao
-// transactionRoutes.post("/transacao", newTransaction);
-// //atualizar transacao usuario logado
+//cadastrar transacao
+transactionRoutes.post("/transacao", newTransaction);
+//atualizar transacao usuario logado
 // transactionRoutes.put("/transacao/:id", updateTransaction);
 // //excluir transacao usuario logado
 // transactionRoutes.delete("/transacao/:id", deleteTransaction);
 
-// module.exports = transactionRoutes;
+module.exports = transactionRoutes;
