@@ -11,7 +11,8 @@ create table users (
 
 create table categories (
 	id serial primary key,
-  descrip text
+  descrip text,
+	id_user integer references users(id) null
 );
 
 create table type_transaction (

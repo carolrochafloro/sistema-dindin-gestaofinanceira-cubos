@@ -1,8 +1,15 @@
 const knex = require("../../config/dbConnection");
 
 const listCategories = async (req, res) => {
+	const userId = req.user.id;
+	console.log(userId);
 	try {
-		const categories = await knex.select("*").from("categories");
+		const categories = await knex
+			.select("*")
+			.from("categories")
+			.where(function () {
+				this.whereNull("user_id").orWhere("user_id", userId);
+			});
 
 		return res.status(200).json(categories);
 	} catch (error) {

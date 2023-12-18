@@ -4,7 +4,6 @@ const transactionRoutes = express();
 const {
 	newTransaction,
 	listTransactions,
-	listCategories,
 } = require("../controllers/transactions/index");
 
 const { checkAuth } = require("../middleware/index");
@@ -12,9 +11,6 @@ const { checkAuth } = require("../middleware/index");
 transactionRoutes.use(checkAuth);
 // extrato das transacoes
 // transactionRoutes.get("/transacao/extrato", extractTransactions);
-// //listar categorias
-transactionRoutes.get("/categoria", listCategories);
-// //listar transacoes
 transactionRoutes.get("/transacao", listTransactions);
 // //detalhar transacao
 // transactionRoutes.get("/transacao/:id", detailTransactions);
