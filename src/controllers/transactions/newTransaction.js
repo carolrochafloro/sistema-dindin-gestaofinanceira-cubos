@@ -34,12 +34,7 @@ const newTransaction = async (req, res) => {
 				mensagem: "Houve um erro ao inserir a transação no banco de dados.",
 			});
 		}
-		// const returnObj = await knex
-		// 	.select("*")
-		// 	.from("transactions")
-		// 	.where("id", idTransaction)
-		// 	.leftJoin("categories")
-		// 	.where("id", category_id);
+
 		const returnObj = await knex
 			.select("*")
 			.from("transactions")
