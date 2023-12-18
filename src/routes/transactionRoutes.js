@@ -1,7 +1,10 @@
 const express = require("express");
 const transactionRoutes = express();
 
-const { newTransaction } = require("../controllers/transactions/index");
+const {
+	newTransaction,
+	listTransactions,
+} = require("../controllers/transactions/index");
 
 const { checkAuth } = require("../middleware/index");
 
@@ -11,7 +14,7 @@ transactionRoutes.use(checkAuth);
 // //listar categorias
 // transactionRoutes.get("/categoria", listCategories);
 // //listar transacoes
-// transactionRoutes.get("/transacao", listTransactions);
+transactionRoutes.get("/transacao", listTransactions);
 // //detalhar transacao
 // transactionRoutes.get("/transacao/:id", detailTransactions);
 //cadastrar transacao
