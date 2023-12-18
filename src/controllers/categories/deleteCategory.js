@@ -10,6 +10,10 @@ const deleteCategory = async (req, res) => {
 			.from("categories")
 			.where("id", idCategory);
 
+		if (category.length < 1) {
+			return res.status(404).json({ mensagem: "Categoria não encontrada." });
+		}
+
 		if (category[0].user_id != idUser) {
 			return res
 				.status(404)
