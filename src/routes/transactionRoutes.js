@@ -13,7 +13,6 @@ const {
 const { checkAuth } = require("../middleware/index");
 
 transactionRoutes.use(checkAuth);
-
 transactionRoutes.get("/transacao/extrato", extractTransactions);
 transactionRoutes.get("/transacao", listTransactions);
 transactionRoutes.get("/transacao/:id", detailTransaction);

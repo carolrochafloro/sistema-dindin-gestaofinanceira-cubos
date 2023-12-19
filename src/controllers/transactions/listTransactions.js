@@ -10,9 +10,8 @@ const listTransactions = async (req, res) => {
 	try {
 		if (categoryFilter.length > 0) {
 			const result = [];
-			//buscar id de cada categoria pelo nome
-			//where só com os ids do filtro
 			const filterId = [];
+
 			for (item of categoryUpperCase) {
 				const filter = await knex
 					.select("id")
@@ -23,15 +22,16 @@ const listTransactions = async (req, res) => {
 			}
 
 			for (item of filterId) {
-				console.log(item);
 				const transactions = await knex
 					.select("transactions.*", "categories.category")
 					.from("transactions")
 					.where("user_id", idUser)
 					.andWhere("category_id", item)
 					.join("categories", "transactions.category_id", "=", "categories.id");
+
 				result.push(transactions);
 			}
+
 			return res.status(200).json(result);
 		}
 

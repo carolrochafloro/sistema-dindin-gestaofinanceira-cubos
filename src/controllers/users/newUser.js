@@ -1,3 +1,4 @@
+const { mock } = require("jest-mock-extended");
 const knex = require("../../config/dbConnection");
 const bcrypt = require("bcrypt");
 
