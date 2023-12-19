@@ -1,3 +1,6 @@
+- [Portugês](#sobre-o-sistema)
+- [English](#about-the-system)
+
 # Sistema DinDin - gestão financeira {#portugues}
 
 Desafio do módulo 3 do curso de Desenvolvimento de Software com foco em back-end da Cubos Academy refatorado após o fim do curso.
@@ -33,6 +36,8 @@ A senha é armazenada criptografada. Todos os campos devem ser strings. O e-mail
 
 Retorna ID, nome e e-mail do usuário cadastrado.
 
+![Novo usuário](./imgs/newUser.jpeg)
+
 `POST /login`  
 Recebe no body um objeto com email e senha. Ambos os dados devem ser strings e são obrigatórios.
 
@@ -42,6 +47,8 @@ _{
 }_
 
 Retorna ID, nome e e-mail do usuário logado e o bearer token com expiração em 6 horas.
+
+![Login](./imgs/login.jpeg)
 
 **As rotas seguintes passam por validação de autenticação.**
 
@@ -92,6 +99,8 @@ _{
 "category": "Casa"  
 }_
 
+![Nova transação](./imgs/newTransaction.jpeg)
+
 `PUT /transacao`  
 Altera uma transação existente e pertencente ao usuário logado. Todos os dados a serem recebidos no body são opcionais:
 
@@ -108,8 +117,7 @@ Retorna todos os dados da transação alterada.
 `GET /transacao`  
 Não recebe parâmetros no body. Retorna um array de objetos com todas as transaçõs cadastradas pelo usuário.
 
-**Pode receber query params para filtrar categorias:  
-/transacao?filtro[]=casa&filtro[]salário**
+![Listar transações](./imgs/listTransactions.jpeg)
 
 _{  
  "id": 12,  
@@ -121,6 +129,11 @@ _{
  "type_transaction": 1,  
  "category": "Salário"  
  }_
+
+**Pode receber query params para filtrar categorias:  
+/transacao?filtro[]=casa&filtro[]salário**
+
+![Lista com filtro](./imgs/listFilter.jpeg)
 
 `GET /transacao/:id`  
 Recebe o id de uma transição como parâmetro na URL e retorna um objeto com os detalhes da transação, caso pertencente ao usuário.
@@ -134,6 +147,8 @@ _{
  "user_id": 2,  
  "type_transaction": 2  
  }_
+
+![Detalhar transação](./imgs/detailTransaction.jpeg)
 
 `DELETE /transacao/:id`  
 Recebe o id de uma transição como parâmetro na URL e, caso pertença ao usuário, deleta a mesma do banco de dados. Retorna status 200 e uma mensagem _"Transação excluída._.
@@ -153,6 +168,8 @@ _{
 }
 ]  
 }_
+
+![Extrato](./imgs/extract.jpeg)
 
 ## Categorias
 
@@ -213,6 +230,8 @@ The password is stored encrypted. All fields must be strings. The email cannot b
 
 Returns the ID, name, and email of the registered user.
 
+![New user](./imgs/newUser.jpeg)
+
 `POST /login`
 Receives an object with email and password in the body. Both data must be strings and are mandatory.
 
@@ -222,6 +241,8 @@ _{
 }_
 
 Returns the ID, name, and email of the logged-in user and the bearer token with a 6-hour expiration.
+
+![Login](./imgs/login.jpeg)
 
 **The following routes undergo authentication validation.**
 
@@ -272,6 +293,8 @@ _{
 "category": "Home"  
 }_
 
+![New transaction](./imgs/newTransaction.jpeg)
+
 `PUT /transacao`
 Modifies an existing transaction belonging to the logged-in user. All data to be received in the body is optional:
 
@@ -299,8 +322,12 @@ _{
 "category": "Salary"  
 }_
 
+![List transactions](./imgs/listTransactions.jpeg)
+
 **It can receive query params to filter categories:
 /transaction?filter[]=home&filter[]=salary**
+
+![Lista com filtro](./imgs/listFilter.jpeg)
 
 `GET /transacao/:id`
 Receives the id of a transaction as a parameter in the URL and returns an object with the details of the transaction, if it belongs to the user.
@@ -314,6 +341,8 @@ _{
 "user_id": 2,  
 "type_transaction": 2  
 }_
+
+![Detail transaction](./imgs/detailTransaction.jpeg)
 
 `DELETE /transacao/:id`
 Receives the id of a transaction as a parameter in the URL and, if it belongs to the user, deletes it from the database. Returns status 200 and a message "Transaction deleted.".
@@ -333,6 +362,8 @@ _{
 }
 ]  
 }_
+
+![Extract](./imgs/extract.jpeg)
 
 ### Categories
 
