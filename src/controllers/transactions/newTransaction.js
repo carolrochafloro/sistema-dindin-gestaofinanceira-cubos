@@ -35,14 +35,6 @@ const newTransaction = async (req, res) => {
 			});
 		}
 
-		// const returnObj = await knex
-		// 	.select("*")
-		// 	.from("transactions")
-		// 	.where("id", idTransaction.id)
-		// 	.join("categories", function () {
-		// 		this.on("id", "=", "category_id");
-		// 	});
-
 		const returnObj = await knex
 			.select("transactions.*", "categories.category")
 			.from("transactions")
