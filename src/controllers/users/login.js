@@ -25,7 +25,7 @@ const loginUser = async (req, res) => {
 
 		return res.status(200).json({ UsuarioLogado, token });
 	} catch (error) {
-		console.error(error);
+		console.error("Erro em loginUser", error);
 		return res.status(500).json({ mensagem: "Erro do servidor" });
 	}
 };

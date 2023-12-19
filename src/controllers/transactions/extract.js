@@ -15,7 +15,7 @@ const extractTransactions = async (req, res) => {
 			.sum("ammount as total_expense");
 		return res.status(200).json({ income, expense });
 	} catch (error) {
-		console.error(error);
+		console.error("Erro em extractTransactions", error);
 		return res.status(500).json({ mensagem: "Erro do servidor" });
 	}
 };

@@ -51,7 +51,7 @@ const listTransactions = async (req, res) => {
 
 		return res.status(200).json(transactions);
 	} catch (error) {
-		console.error("Erro no listTransactions", error);
+		console.error("Erro em listTransactions", error);
 		return res.status(500).json({ mensagem: "Erro do servidor" });
 	}
 };

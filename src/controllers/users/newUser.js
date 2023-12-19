@@ -16,7 +16,7 @@ const newUser = async (req, res) => {
 
 		return res.status(201).json(newUserQuery);
 	} catch (error) {
-		console.error(error);
+		console.error("Erro em newUser", error);
 		return res.status(500).json({ mensagem: "Erro do servidor" });
 	}
 };

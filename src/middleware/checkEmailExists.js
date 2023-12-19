@@ -14,7 +14,7 @@ const checkEmailExists = async (req, res, next) => {
 
 		next();
 	} catch (error) {
-		console.error(error);
+		console.error("Erro em cgeckEmailExists", error);
 		return res.status(500).json({ mensagem: "erro do servidor" });
 	}
 };

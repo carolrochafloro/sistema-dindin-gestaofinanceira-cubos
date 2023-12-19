@@ -13,7 +13,7 @@ const listCategories = async (req, res) => {
 
 		return res.status(200).json(categories);
 	} catch (error) {
-		console.error(error);
+		console.error("Erro em listCategories", error);
 		return res.status(500).json({ mensagem: "Erro do servidor." });
 	}
 };

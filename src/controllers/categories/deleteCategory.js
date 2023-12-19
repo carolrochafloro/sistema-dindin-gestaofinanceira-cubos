@@ -26,7 +26,7 @@ const deleteCategory = async (req, res) => {
 			.status(201)
 			.json({ mensagem: "Categoria deletada com sucesso." });
 	} catch (error) {
-		console.error(error);
+		console.error("Erro em deleteCategory", error);
 		return res.status(500).json({ mensagem: "Erro do servidor." });
 	}
 };
