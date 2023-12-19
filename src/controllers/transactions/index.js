@@ -3,6 +3,7 @@ const listTransactions = require("./listTransactions");
 const updateTransaction = require("./updateTransaction");
 const deleteTransaction = require("./deleteTransaction");
 const detailTransaction = require("./detailTransaction");
+const extractTransactions = require("./extract");
 
 module.exports = {
 	newTransaction,
@@ -10,4 +11,5 @@ module.exports = {
 	updateTransaction,
 	deleteTransaction,
 	detailTransaction,
+	extractTransactions,
 };
