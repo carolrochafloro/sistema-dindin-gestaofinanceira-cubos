@@ -11,9 +11,8 @@ const listTransactions = async (req, res) => {
 		if (categoryFilter.length > 0) {
 			const result = [];
 			const filterId = [];
-
+			const invalidFilter = [];
 			for (item of categoryUpperCase) {
-				const invalidFilter = [];
 				const filter = await knex
 					.select("id")
 					.from("categories")
@@ -25,7 +24,7 @@ const listTransactions = async (req, res) => {
 
 				filterId.push(filter[0].id);
 			}
-
+			let finalFilter = [];
 			for (item of filterId) {
 				const transactions = await knex
 					.select("transactions.*", "categories.category")
@@ -35,13 +34,14 @@ const listTransactions = async (req, res) => {
 					.join("categories", "transactions.category_id", "=", "categories.id");
 
 				result.push(transactions);
+				finalFilter = transactions;
 			}
 			if (invalidFilter.length > 0) {
 				return res
 					.status(404)
 					.json(`O(s) filtro(s) informados são inválidos: ${invalidFilter}`);
 			}
-			return res.status(200).json(transactions);
+			return res.status(200).json(finalFilter);
 		}
 
 		const transactions = await knex
