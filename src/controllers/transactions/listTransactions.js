@@ -13,10 +13,15 @@ const listTransactions = async (req, res) => {
 			const filterId = [];
 
 			for (item of categoryUpperCase) {
+				const invalidFilter = [];
 				const filter = await knex
 					.select("id")
 					.from("categories")
 					.where("category", item);
+
+				if (filter.length < 1) {
+					invalidFilter.push(item);
+				}
 
 				filterId.push(filter[0].id);
 			}
@@ -31,8 +36,12 @@ const listTransactions = async (req, res) => {
 
 				result.push(transactions);
 			}
-
-			return res.status(200).json(result);
+			if (invalidFilter.length > 0) {
+				return res
+					.status(404)
+					.json(`O(s) filtro(s) informados são inválidos: ${invalidFilter}`);
+			}
+			return res.status(200).json(transactions);
 		}
 
 		const transactions = await knex
@@ -42,7 +51,7 @@ const listTransactions = async (req, res) => {
 
 		return res.status(200).json(transactions);
 	} catch (error) {
-		console.error(error);
+		console.error("Erro em listTransactions", error);
 		return res.status(500).json({ mensagem: "Erro do servidor" });
 	}
 };

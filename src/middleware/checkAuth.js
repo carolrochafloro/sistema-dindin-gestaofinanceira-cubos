@@ -29,7 +29,8 @@ const checkAuth = async (req, res, next) => {
 		if (error instanceof jwt.JsonWebTokenError) {
 			return res.status(401).json({ message: "Token inválido" });
 		}
-		console.error(error);
+		console.error("Erro em checkAuth", error);
+
 		return res.status(500).json({ message: "Erro do servidor midd" });
 	}
 };

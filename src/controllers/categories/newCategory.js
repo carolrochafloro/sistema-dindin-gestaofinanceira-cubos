@@ -9,12 +9,12 @@ const newCategory = async (req, res) => {
 			.returning("id", "category")
 			.insert({
 				category,
-				user_id: idUser,
+				id_user: idUser,
 			});
 
 		return res.status(201).json(categories);
 	} catch (error) {
-		console.error(error);
+		console.error("Erro em newCategory", error);
 		return res.status(500).json({ mensagem: "Erro do servidor." });
 	}
 };

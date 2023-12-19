@@ -29,7 +29,7 @@ const updateUser = async (req, res) => {
 
 		return res.status(201).json(query);
 	} catch (error) {
-		console.error(error);
+		console.error("Erro em updateUser", error);
 		return res.status(500).json({ mensagem: "Erro do servidor" });
 	}
 };
