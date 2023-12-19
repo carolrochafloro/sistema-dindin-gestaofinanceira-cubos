@@ -16,11 +16,11 @@ const loginUser = async (req, res) => {
 		if (!senhaValida) {
 			return res.status(400).json({ mensagem: "Usuário e/ou senha inválidos" });
 		}
-		//token login
+
 		const token = jwt.sign({ id: user[0].id }, process.env.JWT_PASSWORD, {
 			expiresIn: process.env.JWT_EXPIRE,
 		});
-		//desestruturação p/ exibir informações sem senha
+
 		const { password: _, ...UsuarioLogado } = user[0];
 
 		return res.status(200).json({ UsuarioLogado, token });

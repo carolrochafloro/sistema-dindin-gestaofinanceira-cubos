@@ -1,4 +1,5 @@
 const knex = require("../../config/dbConnection");
+const delItem = require("../../utils/deleteFunction");
 
 const deleteCategory = async (req, res) => {
 	const idUser = req.user.id;
@@ -14,13 +15,13 @@ const deleteCategory = async (req, res) => {
 			return res.status(404).json({ mensagem: "Categoria não encontrada." });
 		}
 
-		if (category[0].user_id != idUser) {
+		if (category[0].id_user != idUser) {
 			return res
 				.status(404)
 				.json({ mensagem: "Esta categoria não pode ser deletada." });
 		}
 
-		await knex("categories").where("id", idCategory).del();
+		await delItem("categories", "id", idCategory);
 
 		return res
 			.status(201)

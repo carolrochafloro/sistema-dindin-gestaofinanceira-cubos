@@ -9,7 +9,7 @@ const newCategory = async (req, res) => {
 			.returning("id", "category")
 			.insert({
 				category,
-				user_id: idUser,
+				id_user: idUser,
 			});
 
 		return res.status(201).json(categories);

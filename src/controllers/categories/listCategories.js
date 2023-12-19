@@ -8,7 +8,7 @@ const listCategories = async (req, res) => {
 			.select("*")
 			.from("categories")
 			.where(function () {
-				this.whereNull("user_id").orWhere("user_id", userId);
+				this.whereNull("id_user").orWhere("id_user", userId);
 			});
 
 		return res.status(200).json(categories);
